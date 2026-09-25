@@ -1,106 +1,663 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio - Muhammad Sonjaya</title>
+    <title>Muhammad Sonjaya - Teknisi & Spesialis Kelistrikan PLN</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        pln: {
+                            blue: '#00529C',
+                            dark: '#0A2540',
+                            yellow: '#FFD100',
+                            accent: '#00B4D8',
+                            light: '#EBF3FA',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Print styles optimization */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: #fff !important;
+                color: #000 !important;
+            }
+            .print-card {
+                border: 1px solid #ddd !important;
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+        }
+
+        /* Glassmorphism effects */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-dark {
+            background: rgba(10, 37, 64, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Pulse glowing effect for status badge */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 209, 0, 0.6); }
+            50% { box-shadow: 0 0 25px rgba(255, 209, 0, 0.9); }
+        }
+        .glow-yellow {
+            animation: pulse-glow 2.5s infinite;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
-    <!-- Header / Hero Section -->
-    <header class="bg-blue-900 text-white py-12 px-6 shadow-md">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl font-bold mb-2">Muhammad Sonjaya</h1>
-            <p class="text-xl text-yellow-400 font-medium mb-4">Teknisi & Spesialis Kelistrikan (PLN)</p>
-            <p class="text-sm text-gray-300 max-w-xl mx-auto">
-                RT 03 / RW 01, Blok Kebon Tebu, Desa Wotgali, Kecamatan Plered, Kabupaten Cirebon, No. 118
-            </p>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-pln-blue selection:text-white">
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 glass-panel border-b border-gray-200 transition-all duration-300 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo / Name -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pln-blue to-pln-accent flex items-center justify-center text-pln-yellow shadow-md">
+                        <i class="fa-solid fa-bolt text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-xl text-pln-dark block leading-tight">M. SONJAYA</span>
+                        <span class="text-xs text-pln-blue font-semibold tracking-wider uppercase">Teknisi Kelistrikan PLN</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-700">
+                    <a href="#about" class="hover:text-pln-blue transition-colors">Profil</a>
+                    <a href="#skills" class="hover:text-pln-blue transition-colors">Keahlian</a>
+                    <a href="#services" class="hover:text-pln-blue transition-colors">Layanan</a>
+                    <a href="#experience" class="hover:text-pln-blue transition-colors">Pengalaman</a>
+                    <a href="#contact" class="hover:text-pln-blue transition-colors">Kontak</a>
+                </div>
+
+                <!-- Action Button Desktop -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <button onclick="window.print()" class="px-4 py-2 text-sm font-semibold text-pln-blue bg-pln-light rounded-lg hover:bg-blue-100 transition-all border border-blue-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Cetak</span>
+                    </button>
+                    <a href="#contact" class="px-4 py-2 text-sm font-semibold text-pln-dark bg-pln-yellow hover:bg-yellow-400 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center space-x-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Hubungi Saya</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="menuBtn" class="text-gray-700 hover:text-pln-blue focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-6 space-y-3 shadow-lg">
+            <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-pln-light hover:text-pln-blue">Profil</a>
+            <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-pln-light hover:text-pln-blue">Keahlian</a>
+            <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-pln-light hover:text-pln-blue">Layanan</a>
+            <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-pln-light hover:text-pln-blue">Pengalaman</a>
+            <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-pln-light hover:text-pln-blue">Kontak</a>
+            <div class="pt-4 border-t border-gray-200 flex flex-col space-y-2">
+                <button onclick="window.print()" class="w-full py-2.5 text-center font-semibold text-pln-blue bg-pln-light rounded-lg">
+                    <i class="fa-solid fa-print mr-2"></i>Cetak Portofolio
+                </button>
+                <a href="#contact" class="w-full py-2.5 text-center font-semibold text-pln-dark bg-pln-yellow rounded-lg block">
+                    <i class="fa-brands fa-whatsapp mr-2"></i>Hubungi WhatsApp
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-gradient-to-br from-pln-dark via-pln-blue to-slate-900 text-white overflow-hidden py-16 lg:py-24">
+        <!-- Decorative Background Patterns -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-pln-yellow blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-pln-accent blur-3xl"></div>
+            <div class="w-full h-full" style="background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1px); background-size: 24px 24px;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <!-- Status Badge -->
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm font-medium backdrop-blur-md">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Siap Bertugas & Siaga 24/7</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        MUHAMMAD <span class="text-transparent bg-clip-text bg-gradient-to-r from-pln-yellow to-amber-300">SONJAYA</span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-blue-100 font-light max-w-2xl mx-auto lg:mx-0">
+                        Teknisi & Spesialis Kelistrikan PLN yang berdedikasi tinggi dalam menjaga keandalan jaringan, instalasi tegangan tinggi/rendah, dan penanganan gangguan cepat tanggap.
+                    </p>
+
+                    <!-- Info Cards Row -->
+                    <div class="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-lg mx-auto lg:mx-0">
+                        <div class="p-3.5 rounded-xl glass-dark flex items-center space-x-3">
+                            <div class="p-2.5 bg-pln-yellow/20 rounded-lg text-pln-yellow">
+                                <i class="fa-solid fa-location-dot text-lg"></i>
+                            </div>
+                            <div class="text-xs">
+                                <span class="text-gray-400 block">Lokasi Tugas / Domisili</span>
+                                <span class="font-semibold text-white">Plered, Kab. Cirebon</span>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl glass-dark flex items-center space-x-3">
+                            <div class="p-2.5 bg-pln-accent/20 rounded-lg text-pln-accent">
+                                <i class="fa-solid fa-shield-halved text-lg"></i>
+                            </div>
+                            <div class="text-xs">
+                                <span class="text-gray-400 block">Standar Operasional</span>
+                                <span class="font-semibold text-white">Sertifikasi K3 Ketenagalistrikan</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-3 sm:space-y-0 sm:space-x-4 no-print">
+                        <a href="https://wa.me/6281234567890?text=Halo%20Pak%20Muhammad%20Sonjaya,%20saya%20ingin%20berkonsultasi%20mengenai%20kelistrikan" target="_blank" class="w-full sm:w-auto px-8 py-3.5 bg-pln-yellow hover:bg-yellow-400 text-pln-dark font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                            <span>Hubungi Langsung</span>
+                        </a>
+                        <button onclick="window.print()" class="w-full sm:w-auto px-6 py-3.5 glass-dark hover:bg-white/20 text-white font-medium rounded-xl transition-all flex items-center justify-center space-x-2 border border-white/20">
+                            <i class="fa-solid fa-file-pdf text-red-400"></i>
+                            <span>Cetak Resume</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Avatar / Illustration Box -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-72 h-72 sm:w-80 sm:h-80 rounded-3xl bg-gradient-to-tr from-pln-blue to-pln-dark border-4 border-white/20 p-6 shadow-2xl flex flex-col justify-between items-center text-center overflow-hidden">
+                        <!-- Background glow inside box -->
+                        <div class="absolute -top-12 -right-12 w-40 h-40 bg-pln-yellow/20 rounded-full blur-xl"></div>
+                        
+                        <div class="relative z-10 my-auto">
+                            <div class="w-28 h-28 mx-auto mb-4 rounded-full bg-pln-dark border-4 border-pln-yellow flex items-center justify-center text-pln-yellow text-5xl shadow-inner glow-yellow">
+                                <i class="fa-solid fa-user-gear"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">MUHAMMAD SONJAYA</h3>
+                            <p class="text-sm text-pln-yellow font-medium mt-1">Ketenagalistrikan & K3 Specialists</p>
+                        </div>
+
+                        <div class="relative z-10 w-full pt-3 border-t border-white/10 flex justify-around text-xs text-blue-200">
+                            <div>
+                                <span class="font-bold text-white block text-sm">100%</span>
+                                <span>Patuh K3</span>
+                            </div>
+                            <div class="border-r border-white/10"></div>
+                            <div>
+                                <span class="font-bold text-white block text-sm">Responsif</span>
+                                <span>24/7 Siaga</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto p-6 space-y-8 my-8">
-        <!-- Profil Singkat -->
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Profil Singkat</h2>
-            <p class="text-gray-700">
-                Profesional di bidang ketenagalistrikan dan distribusi listrik dengan keahlian dalam instalasi, pemeliharaan, serta penanganan gangguan sistem kelistrikan PLN. Berdedikasi tinggi terhadap keselamatan kerja (K3), efisiensi jaringan, serta pelayanan handal bagi masyarakat dan pelanggan industri.
-            </p>
-        </section>
+    <!-- Profile & Metrics Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-24 relative z-20 mb-12">
+                <!-- Metric 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex items-center space-x-4 print-card">
+                    <div class="w-14 h-14 rounded-xl bg-blue-50 text-pln-blue flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-bold text-gray-900">Teknisi Lapangan</h4>
+                        <p class="text-sm text-gray-500">Handal & Teruji di Lapangan</p>
+                    </div>
+                </div>
 
-        <!-- Keahlian Utama -->
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Keahlian Utama</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-4 bg-blue-50 rounded-lg">
-                    <h3 class="font-semibold text-blue-900 mb-1">Operasional & Pemeliharaan</h3>
-                    <p class="text-sm text-gray-600">Pemeliharaan Jaringan Tegangan Rendah (JTR) & Tegangan Menengah (JTM).</p>
+                <!-- Metric 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex items-center space-x-4 print-card">
+                    <div class="w-14 h-14 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-hard-hat"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-bold text-gray-900">Zero Accident</h4>
+                        <p class="text-sm text-gray-500">Prioritas Keselamatan Kerja (K3)</p>
+                    </div>
                 </div>
-                <div class="p-4 bg-blue-50 rounded-lg">
-                    <h3 class="font-semibold text-blue-900 mb-1">Instalasi & Perbaikan</h3>
-                    <p class="text-sm text-gray-600">Pemasangan KWH meter, perbaikan arus/korsleting, dan perawatan gardu distribusi.</p>
-                </div>
-                <div class="p-4 bg-blue-50 rounded-lg">
-                    <h3 class="font-semibold text-blue-900 mb-1">Keselamatan Kerja (K3)</h3>
-                    <p class="text-sm text-gray-600">Penerapan standar Keselamatan dan Kesehatan Kerja Lingkungan (K3L) secara disiplin.</p>
-                </div>
-                <div class="p-4 bg-blue-50 rounded-lg">
-                    <h3 class="font-semibold text-blue-900 mb-1">Troubleshooting & Pelayanan</h3>
-                    <p class="text-sm text-gray-600">Analisis cepat gangguan sistem kelistrikan dan penanganan keluhan teknis di lapangan.</p>
+
+                <!-- Metric 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex items-center space-x-4 print-card">
+                    <div class="w-14 h-14 rounded-xl bg-cyan-50 text-pln-accent flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-plug-circle-check"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-bold text-gray-900">Suplai Handal</h4>
+                        <p class="text-sm text-gray-500">Pemeliharaan JTR & JTM</p>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Pengalaman Kerja -->
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Pengalaman Kerja</h2>
-            <div class="space-y-4">
-                <div>
-                    <div class="flex justify-between items-start flex-wrap">
-                        <h3 class="text-lg font-semibold text-gray-900">Teknisi / Petugas Lapangan – PT PLN (Persero)</h3>
-                        <span class="text-sm text-blue-600 font-medium">Pengalaman Profesional</span>
+            <!-- About Text Box -->
+            <div class="bg-slate-50 p-8 rounded-3xl border border-gray-200 print-card">
+                <div class="max-w-3xl mx-auto text-center space-y-4">
+                    <h2 class="text-xs uppercase font-bold tracking-widest text-pln-blue">Tentang Saya</h2>
+                    <h3 class="text-3xl font-extrabold text-gray-900">Komitmen Tinggi Terhadap Keandalan Energi Listrik</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Saya merupakan profesional di bidang ketenagalistrikan yang berdedikasi penuh dalam pemeliharaan jaringan, analisis pemutusan/penyambungan, serta penanganan gangguan listrik. Memiliki pemahaman mendalam tentang regulasi K3L untuk memastikan keselamatan kerja serta meminimalisir risiko blackout pada jaringan masyarakat maupun industri.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Skills Section -->
+    <section id="skills" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs uppercase font-bold tracking-widest text-pln-blue">Kompetensi Teknik</h2>
+                <h3 class="text-3xl font-extrabold text-gray-900 mt-1">Keahlian Spesialis</h3>
+                <p class="text-gray-600 mt-2">Daftar keterampilan teknis dan kemampuan operasional utama.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Skill 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow print-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-100 text-pln-blue flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-blue-50 text-pln-blue rounded-full">Tinggi</span>
                     </div>
-                    <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1 text-sm">
-                        <li>Bertanggung jawab atas inspeksi rutin dan pemeliharaan jaringan listrik wilayah kerja.</li>
-                        <li>Menangani gangguan listrik mendadak untuk memastikan kestabilan dan keandalan suplai arus listrik.</li>
-                        <li>Melakukan pemasangan baru, penambahan daya, dan penggantian komponen meteran listrik pelanggan.</li>
-                        <li>Menjalankan prosedur K3 secara ketat guna meminimalisir risiko kecelakaan kerja di lapangan.</li>
+                    <h4 class="text-lg font-bold text-gray-900 mb-2">Jaringan Tegangan Rendah & Menengah</h4>
+                    <p class="text-sm text-gray-600 mb-4">Pemeliharaan, inspeksi visual, serta penanganan kendala jaringan JTR & JTM.</p>
+                    <div class="w-full bg-gray-100 rounded-full h-2">
+                        <div class="bg-pln-blue h-2 rounded-full" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow print-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full">Kritis</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-900 mb-2">Troubleshooting & Korsleting</h4>
+                    <p class="text-sm text-gray-600 mb-4">Deteksi cepat titik gangguan arus pendek, kebocoran arus, dan beban lebih.</p>
+                    <div class="w-full bg-gray-100 rounded-full h-2">
+                        <div class="bg-amber-500 h-2 rounded-full" style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow print-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-shield-cat"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full">Standar</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-900 mb-2">Keselamatan Kerja (K3L)</h4>
+                    <p class="text-sm text-gray-600 mb-4">Penerapan Alat Pelindung Diri (APD) lengkap & prosedur kerja aman tegangan tinggi.</p>
+                    <div class="w-full bg-gray-100 rounded-full h-2">
+                        <div class="bg-emerald-500 h-2 rounded-full" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow print-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-cyan-100 text-pln-accent flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-cyan-50 text-cyan-700 rounded-full">Ahli</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-900 mb-2">Instalasi KWH Meter & Gardu</h4>
+                    <p class="text-sm text-gray-600 mb-4">Pemasangan meteran digital/prabayar, penggantian komponen, & perawatan gardu.</p>
+                    <div class="w-full bg-gray-100 rounded-full h-2">
+                        <div class="bg-pln-accent h-2 rounded-full" style="width: 92%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 5 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow print-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-purple-50 text-purple-700 rounded-full">Pelayanan</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-900 mb-2">Pelayanan Pelanggan Cepat Tanggap</h4>
+                    <p class="text-sm text-gray-600 mb-4">Komunikasi ramah dan solutif saat menangani keluhan masyarakat di lapangan.</p>
+                    <div class="w-full bg-gray-100 rounded-full h-2">
+                        <div class="bg-purple-500 h-2 rounded-full" style="width: 88%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 6 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow print-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-red-100 text-red-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-cloud-bolt"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-red-50 text-red-700 rounded-full">Darurat</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-900 mb-2">Penanganan Cuaca Ekstrem</h4>
+                    <p class="text-sm text-gray-600 mb-4">Tim taktis pemulihan aliran listrik pasca bencana atau gangguan pohon tumbang.</p>
+                    <div class="w-full bg-gray-100 rounded-full h-2">
+                        <div class="bg-red-500 h-2 rounded-full" style="width: 95%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs uppercase font-bold tracking-widest text-pln-blue">Cakupan Kerja</h2>
+                <h3 class="text-3xl font-extrabold text-gray-900 mt-1">Layanan Utama</h3>
+                <p class="text-gray-600 mt-2">Bidang spesialisasi operasional kelistrikan yang ditangani.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <div class="p-8 rounded-2xl bg-slate-50 border border-gray-200 hover:border-pln-blue transition-all group print-card">
+                    <div class="w-14 h-14 rounded-2xl bg-pln-blue text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-tower-cell"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Pemeliharaan Jaringan</h4>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Inspeksi berkala Saluran Udara (SUTM/SUTR)</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Pemangkasan ruang bebas pohon (Right of Way)</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Perawatan komponen transformer / gardu</li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="p-8 rounded-2xl bg-slate-50 border border-gray-200 hover:border-pln-blue transition-all group print-card">
+                    <div class="w-14 h-14 rounded-2xl bg-pln-dark text-pln-yellow flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-house-chimney-crack"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Pemasangan & Penyambungan</h4>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Pemasangan Pasang Baru (PB) & Tambah Daya (TD)</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Penggantian meteran tua/rusak ke Smart Meter</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Penataan kabel SR (Sambungan Rumah)</li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="p-8 rounded-2xl bg-slate-50 border border-gray-200 hover:border-pln-blue transition-all group print-card">
+                    <div class="w-14 h-14 rounded-2xl bg-red-600 text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Tim Reaksi Cepat Gangguan</h4>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Penanganan trip / trafo meledak / sekring lepas</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Investigasi penyebab padam darurat</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Normalisasi arus pasca pemeliharaan</li>
                     </ul>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Pendidikan & Sertifikasi -->
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Pendidikan & Sertifikasi</h2>
-            <ul class="space-y-3 text-gray-700">
-                <li class="flex items-start">
-                    <span class="text-blue-600 font-bold mr-2">•</span>
-                    <div>
-                        <strong>Sertifikasi Kompetensi Ketenagalistrikan</strong> – IATKI / PLN
-                    </div>
-                </li>
-                <li class="flex items-start">
-                    <span class="text-blue-600 font-bold mr-2">•</span>
-                    <div>
-                        <strong>Sertifikasi Keselamatan dan Kesehatan Kerja (K3)</strong> – Lembaga Sertifikasi Terkait
-                    </div>
-                </li>
-            </ul>
-        </section>
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs uppercase font-bold tracking-widest text-pln-blue">Rekam Jejak</h2>
+                <h3 class="text-3xl font-extrabold text-gray-900 mt-1">Pengalaman Kerja</h3>
+                <p class="text-gray-600 mt-2">Perjalanan karir dan tanggung jawab operasional.</p>
+            </div>
 
-        <!-- Kontak & Alamat -->
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Kontak & Lokasi</h2>
-            <p class="text-gray-700 mb-2"><strong>Alamat Lengkap:</strong> RT 03 / RW 01, Blok Kebon Tebu, Desa Wotgali, Kecamatan Plered, Kabupaten Cirebon, No. 118</p>
-            <p class="text-gray-700 mb-2"><strong>Telepon/WhatsApp:</strong> [Masukkan No. HP Anda]</p>
-            <p class="text-gray-700"><strong>Email:</strong> [Masukkan Email Anda]</p>
-        </section>
-    </main>
+            <!-- Timeline Container -->
+            <div class="max-w-4xl mx-auto relative border-l-2 border-pln-blue/30 pl-6 sm:pl-8 space-y-10 my-6">
+                <!-- Timeline Item 1 -->
+                <div class="relative group">
+                    <!-- Dot -->
+                    <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-6 h-6 rounded-full bg-pln-blue border-4 border-white shadow-md"></div>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 print-card">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-100 mb-3">
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-900">Teknisi & Petugas Lapangan</h4>
+                                <span class="text-sm font-semibold text-pln-blue">PT PLN (Persero) / Unit Pelayanan</span>
+                            </div>
+                            <span class="text-xs font-semibold px-3 py-1 bg-pln-light text-pln-blue rounded-full mt-2 sm:mt-0 w-fit">
+                                Pengalaman Profesional
+                            </span>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-caret-right text-pln-blue mt-1 mr-2"></i>
+                                <span>Melakukan inspeksi rutin keselamatan dan perawatan keandalan Jaringan Tegangan Rendah (JTR) serta Tegangan Menengah (JTM) di wilayah operasional.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-caret-right text-pln-blue mt-1 mr-2"></i>
+                                <span>Merespons secara cepat tanggap terhadap laporan gangguan listrik masyarakat untuk memastikan durasi padam listrik minimal.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-caret-right text-pln-blue mt-1 mr-2"></i>
+                                <span>Melakukan proses pasang baru, penggantian kWh meter rusak, serta migrasi meteran konvensional ke Prabayar/Smart Meter.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-caret-right text-pln-blue mt-1 mr-2"></i>
+                                <span>Menjalankan penuh SOP K3L (Keselamatan, Kesehatan Kerja, dan Lingkungan) dengan komitmen Zero Harm & Safety First.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative group">
+                    <!-- Dot -->
+                    <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-6 h-6 rounded-full bg-pln-yellow border-4 border-white shadow-md"></div>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 print-card">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-100 mb-3">
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-900">Tim Siaga & Tanggap Darurat</h4>
+                                <span class="text-sm font-semibold text-gray-600">Pemeliharaan Penanganan Gangguan</span>
+                            </div>
+                            <span class="text-xs font-semibold px-3 py-1 bg-amber-50 text-amber-700 rounded-full mt-2 sm:mt-0 w-fit">
+                                Penugasan Khusus
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            Aktif berpartisipasi dalam penanganan pemulihan cepat kelistrikan akibat cuaca ekstrem, perbaikan trafo terbakar, serta perbaikan sistem distribusi daerah rawan gangguan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Location Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs uppercase font-bold tracking-widest text-pln-blue">Informasi Kontak</h2>
+                <h3 class="text-3xl font-extrabold text-gray-900 mt-1">Alamat & Lokasi Tugas</h3>
+                <p class="text-gray-600 mt-2">Silakan hubungi untuk keperluan dinas, koordinasi teknik, atau konsultasi kelistrikan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Address Details Card -->
+                <div class="lg:col-span-6 bg-slate-50 p-8 rounded-3xl border border-gray-200 space-y-6 print-card">
+                    <div class="flex items-start space-x-4">
+                        <div class="p-3 bg-pln-blue text-white rounded-2xl text-xl flex-shrink-0">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-900">Alamat Lengkap Rumah / Domisili</h4>
+                            <p class="text-gray-600 text-sm mt-1 leading-relaxed">
+                                RT 03 / RW 01, BLOK KEBON TEBU<br>
+                                DESA WOTGALI, KECAMATAN PLERED<br>
+                                KABUPATEN CIREBON, JAWA BARAT<br>
+                                <span class="font-semibold text-pln-blue">NOMOR 118</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-6 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 bg-emerald-500 text-white rounded-2xl text-xl flex-shrink-0">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500 block">WhatsApp / Telepon</span>
+                                <a href="https://wa.me/6281234567890" target="_blank" class="text-base font-bold text-gray-900 hover:text-pln-blue transition-colors">
+                                    +62 812-3456-7890
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 bg-pln-dark text-white rounded-2xl text-xl flex-shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500 block">Email Resmi / Pribadi</span>
+                                <span class="text-base font-bold text-gray-900">
+                                    muhammad.sonjaya@pln.co.id
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direct Send WhatsApp Form Interactive -->
+                    <div class="pt-4 border-t border-gray-200 no-print">
+                        <h5 class="text-sm font-bold text-gray-900 mb-3">Kirim Pesan WhatsApp Cepat</h5>
+                        <div class="space-y-3">
+                            <input type="text" id="senderName" placeholder="Nama Anda" class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pln-blue">
+                            <textarea id="senderMessage" rows="3" placeholder="Tuliskan pesan atau keperluan konsultasi kelistrikan..." class="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pln-blue"></textarea>
+                            <button onclick="sendWhatsApp()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center space-x-2">
+                                <i class="fa-brands fa-whatsapp text-lg"></i>
+                                <span>Kirim via WhatsApp</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map / Regional Visual Card -->
+                <div class="lg:col-span-6 bg-pln-dark text-white p-8 rounded-3xl relative overflow-hidden shadow-xl min-h-[400px] flex flex-col justify-between">
+                    <div class="absolute inset-0 opacity-20 pointer-events-none">
+                        <div class="w-full h-full" style="background-image: radial-gradient(#FFD100 1px, transparent 1px); background-size: 20px 20px;"></div>
+                    </div>
+
+                    <div class="relative z-10 space-y-4">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-pln-yellow text-pln-dark text-xs font-bold rounded-full uppercase">
+                            <i class="fa-solid fa-location-crosshairs"></i>
+                            <span>Wilayah Operasional</span>
+                        </div>
+                        <h4 class="text-2xl font-bold">Kecamatan Plered & Surrounding</h4>
+                        <p class="text-sm text-gray-300 leading-relaxed">
+                            Mencakup area pelayanan Kabupaten Cirebon, penanganan cepat instalasi dan pemeliharaan listrik area Wotgali dan sekitarnya.
+                        </p>
+                    </div>
+
+                    <!-- Mock Graphic Map Card -->
+                    <div class="relative z-10 bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 mt-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-pln-yellow">POINT LOKASI #118</span>
+                            <span class="text-xs text-emerald-400 font-medium">● Jaringan Normal</span>
+                        </div>
+                        <p class="text-xs text-blue-100">
+                            Blok Kebon Tebu, Desa Wotgali, Kec. Plered, Cirebon
+                        </p>
+                        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-gray-300">
+                            <span>Status Petugas: <strong class="text-white">ON CALL SIAGA</strong></span>
+                            <i class="fa-solid fa-bolt text-pln-yellow text-base"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white text-center py-6 text-sm">
-        <p>&copy; 2026 Muhammad Sonjaya. All Rights Reserved.</p>
+    <footer class="bg-slate-900 text-gray-400 py-8 border-t border-slate-800 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex justify-center items-center space-x-2 text-white font-bold text-lg">
+                <i class="fa-solid fa-bolt text-pln-yellow"></i>
+                <span>MUHAMMAD SONJAYA</span>
+            </div>
+            <p class="text-xs text-gray-500 max-w-md mx-auto">
+                Teknisi & Spesialis Kelistrikan PLN | RT 03 RW 01 Blok Kebon Tebu Desa Wotgali Kec. Plered Kab. Cirebon No. 118
+            </p>
+            <p class="text-xs text-gray-600">
+                &copy; 2026 Muhammad Sonjaya. All Rights Reserved.
+            </p>
+        </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle logic
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking menu item
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Interactive WhatsApp Message Generator
+        function sendWhatsApp() {
+            const name = document.getElementById('senderName').value.trim();
+            const message = document.getElementById('senderMessage').value.trim();
+
+            if (!name || !message) {
+                alert('Mohon isi nama dan pesan Anda sebelum mengirim.');
+                return;
+            }
+
+            const phoneNumber = '6281234567890'; // Silakan ganti dengan nomor HP aktif Pak Sonjaya
+            const text = `Halo Pak Muhammad Sonjaya, Saya ${encodeURIComponent(name)}.%0A%0APesan:%0A${encodeURIComponent(message)}`;
+            
+            window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
+        }
+    </script>
 </body>
 </html>
